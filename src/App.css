@@ -1,0 +1,211 @@
+*{
+  margin:0;
+  padding: 0;
+  text-decoration: none;
+  list-style: none;
+}
+div{
+  box-sizing: border-box;
+}
+.App{
+  width: 100%;
+  height: 100vh;
+}
+.Login{
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+}
+.Login_top,.Login_bottom{
+  width: 100%;
+}
+.Login_top{
+  height: 70%;
+  display: flex;
+  flex-direction: column;
+  border-bottom: 1px solid black;
+}
+.Login_top > form{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.Login_top > form > label, .Join > form > label{
+  width: 80%;
+  text-align: start;
+}
+.Login_top > form >input ,.Join > form > input{
+  width: 80%;
+  height: 50px;
+  border: none;
+  border-bottom: 1px solid black;
+  margin-bottom: 30px;
+  font-size: 20px;
+}
+.Login_bottom{
+  padding-top:30px;
+  height: 30%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.Login button,.Join > form > button{
+  width: 80%;
+  height: 50px;
+  border: none;
+  background-color: antiquewhite;
+  border-radius: 50px;
+  margin-bottom: 30px;
+  border: 1px solid black;
+}
+
+/* join 회원가입 */
+
+.Join{
+  width: 100%;
+  text-align: center;
+}
+.Join > form >img{
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+}
+.Join > form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+.Join > form > .joinError{
+  margin-bottom: 15px;
+  color: #ff3108;
+}
+.Join > form > .emailError_false, .Join > form > .passwordError_false, .Join > form > .nicknameError_false{
+  display: none;
+}
+.Join > form > .emailError_true, .Join > form > .passwordError_true, .Join > form > .nicknameError_true{
+  display: block;
+}
+
+/* Board 게시판 */
+.Board{
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+  position: relative;
+}
+.slide_wrap{
+  width: 100%;
+  height: 150px;
+  margin-top:30px;
+  margin-bottom: 30px;
+  padding: 10px;
+  box-shadow: 1px 2px 2px 2px rgba(0,0,0,0.3);
+  border-radius: 5px;
+}
+.Board_btn_box{
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 30px;
+}
+.Board_btn_box > .Board_sort, .Board_btn_box > .Board_addbtn_box{
+  display: flex;
+}
+.Board_btn_box > .Board_sort p, .Board_btn_box > .Board_addbtn_box > button{
+  margin-right: 10px;
+  margin-left:10px;
+}
+.pagination{
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  position: absolute;
+}
+/* ListItem 리스트아이템 */
+
+.ListItem{
+  width: 100%;
+  height: auto;
+  display: flex;
+  align-items: center;
+  margin-bottom: 30px;
+}
+.ListItem > .ListItem_Photo_visible{
+  width: 20%;
+  height: auto;
+  visibility: visible;
+}
+.ListItem > .ListItem_Photo_hidden{
+  width: 20%;
+  height: auto;
+  visibility: hidden;
+}
+.ListItem > .ListItem_box{
+  width: 80%;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(0,0,0,0.3);
+}
+.ListItem_contents,.ListItem_info{
+  display: flex;
+  flex-direction: column;
+}
+.ListItem_contents > h3,p,.ListItem_info > span{
+  margin-bottom: 10px;
+}
+/* Create 작성 페이지 (수정페이지) */
+.Create{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.Create > input, .Create > textarea {
+  width: 90%;
+  margin-top:30px;
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid rgba(0,0,0,0.3);
+  border-radius: 5px;
+  transition: all 0.5s;
+}
+.Create > textarea{
+  height: 200px;
+  max-height: 300px;
+}
+.Create > input:focus{
+  border: none;
+  outline: none;
+  border-radius: 0px;
+  border-bottom: 1px solid black;
+}
+.Create > textarea:focus{
+  outline: none;
+  border: 1px solid black;
+}
+.Create_Photo_box{
+  width: 90%;
+  display: flex;
+  justify-content: space-between;
+}
+.Create > .Create_Photo_box label{
+  font-size: 26px;
+  margin-right: 30px;
+}
+.Create > .Create_Photo_box img{
+  width: 100px;
+  height: 100px;
+  cursor: pointer;
+}
+.Create > .Create_Photo_box button{
+  width: 70px;
+  height: 30px;
+}
+
+/* Detail 상세페이지 */
+
+.Detail{
+  padding: 10px;
+}
