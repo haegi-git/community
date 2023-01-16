@@ -15,23 +15,39 @@ const Detail = () => {
   useEffect(() => {
     db.collection("post").onSnapshot((res) => {
       const findDetailItem = res.docs.find((ele) => ele.id === id);
-      setDetailData(findDetailItem.data());
+      const toDate = findDetailItem.data().date.toDate();
+      const date = `${toDate.getMonth() + 1} / ${toDate.getDate()}`;
+
+      const formatData = {
+        ...findDetailItem.data(),
+        date: date,
+      };
+      setDetailData(formatData);
     });
   }, []);
-  console.log(detailData);
+
   return (
     <div className="Detail">
       <Header leftBtn={goBackBtn} />
 
       <div className="Detail_top">
-        <h3>제목</h3>
+        <h3>{detailData.title}</h3>
         <div className="Detail_user">
-          <p>작성자 |</p>
-          <p>날짜</p>
+          <p>{detailData.userName} |</p>
+          <p>{detailData.date}</p>
         </div>
       </div>
 
-      <div className="Detail_content"></div>
+      <div className="Detail_content">
+        {detailData.postPhoto === undefined ? null : (
+          <img src={detailData.postPhoto} alt="게시글 이미지" />
+        )}
+        <h3>{detailData.content}</h3>
+        <div className="Detail_content_btn">
+          <button>수정하기</button>
+          <button>삭제하기</button>
+        </div>
+      </div>
     </div>
   );
 };
