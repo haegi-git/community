@@ -22,8 +22,6 @@ const New = () => {
   };
 
   const postingUpload = async (e) => {
-    const url = await StorageUpload("image/", inputPhoto.name, inputPhoto);
-
     const setData = {
       userName: user.userName,
       userUid: user.userUid,
@@ -33,6 +31,7 @@ const New = () => {
       date: new Date(),
     };
     if (inputPhoto) {
+      const url = await StorageUpload("image/", inputPhoto.name, inputPhoto);
       const setPhotoData = { ...setData, postPhoto: url };
 
       db.collection("post")
@@ -52,7 +51,11 @@ const New = () => {
     <div className="New">
       <Header leftBtn={goBackBtn} centerTitle={"Writing"} />
 
-      <Create setInputPhoto={getPhotoFile} createBtn={postingUpload} />
+      <Create
+        setInputPhoto={getPhotoFile}
+        createBtn={postingUpload}
+        btnText="작성하기"
+      />
     </div>
   );
 };

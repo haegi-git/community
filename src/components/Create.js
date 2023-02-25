@@ -2,18 +2,42 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faImage } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { setInputState } from "../store";
+import { getPhoto, setInputState } from "../store";
 import PreviewPhoto from "../util/PreviewPhoto";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const Create = (props) => {
-  const inputState = useSelector((state) => state.inputState);
   const dispatch = useDispatch();
+  const inputState = useSelector((state) => state.inputState);
+  const editPreviewPhoto = useSelector((state) => state.editPreviewPhoto);
 
   const [preview, setPreview] = useState("");
+
+  useEffect(() => {
+    // 상세페이지 수정할 때 상세페이지 이미지를 받아올 곳
+    // 수정이라면 이미지파일을 글생성이라면 "" 공백을 받아온다.
+    setPreview(editPreviewPhoto);
+  }, []);
+  // 이미지 미리보기 함수인데 함수를 분리시켜줘서 코드가짧고 미리볼 url을 preview로 넣는다.
   const onChangePreview = async (e) => {
     const getPreviewPhoto = await PreviewPhoto(e.target.files[0]);
     setPreview(getPreviewPhoto);
+  };
+  // 이미지 미리보기 삭제할 함수 / 이미지 업로드파일 삭제
+  const deletePhotoBtn = () => {
+    setPreview("");
+    props.setInputPhoto("");
+    dispatch(getPhoto(""));
+  };
+
+  const createBtn = () => {
+    if (inputState.inputTitle.length < 1) {
+      alert("제목이 공백임");
+    } else if (inputState.inputContent.length < 1) {
+      alert("본문이 공백임");
+    } else {
+      props.createBtn();
+    }
   };
   return (
     <div className="Create">
@@ -49,19 +73,15 @@ const Create = (props) => {
           </label>
           {preview === "" ? null : (
             <div style={{ position: "relative" }}>
-              <img src={preview === undefined ? null : preview} alt="테스트" />
-              <DeletePhoto
-                onClick={() => {
-                  setPreview("");
-                  props.setInputPhoto("");
-                }}
-              >
-                X
-              </DeletePhoto>
+              <img
+                src={preview === "" ? editPreviewPhoto : preview}
+                alt="테스트"
+              />
+              <DeletePhoto onClick={deletePhotoBtn}>X</DeletePhoto>
             </div>
           )}
         </div>
-        <button onClick={props.createBtn}>작성하기</button>
+        <button onClick={createBtn}>{props.btnText}</button>
       </div>
       <input
         onChange={(e) => {

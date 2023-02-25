@@ -31,8 +31,8 @@ const loginUserData = createSlice({
   },
 });
 
-const previewPhotoState = createSlice({
-  name: "previewPhotoState",
+const editPreviewPhoto = createSlice({
+  name: "editPreviewPhoto",
   initialState: "",
   reducers: {
     getPhoto(state, action) {
@@ -41,12 +41,12 @@ const previewPhotoState = createSlice({
   },
 });
 
-const test = createSlice({
-  name: "test",
-  initialState: "",
+const dark = createSlice({
+  name: "dark",
+  initialState: false,
   reducers: {
-    getTest(state, action) {
-      return (state = action.payload);
+    toggleDark(state, action) {
+      return !state;
     },
   },
 });
@@ -54,12 +54,12 @@ const test = createSlice({
 export default configureStore({
   reducer: {
     inputState: inputState.reducer,
-    previewPhotoState: previewPhotoState.reducer,
+    editPreviewPhoto: editPreviewPhoto.reducer,
     loginUserData: loginUserData.reducer,
-    test: test.reducer,
+    dark: dark.reducer,
   },
 });
 export const { setInputState } = inputState.actions;
-export const { getPhoto } = previewPhotoState.actions;
+export const { getPhoto } = editPreviewPhoto.actions;
 export const { setLoginUserData } = loginUserData.actions;
-export const { getTest } = test.actions;
+export const { toggleDark } = dark.actions;

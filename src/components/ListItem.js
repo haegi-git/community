@@ -2,7 +2,9 @@ import { useNavigate } from "react-router-dom";
 
 const ListItem = (props) => {
   const toDate = props.item.date.toDate();
-  const itemDate = `${toDate.getMonth() + 1}/${toDate.getDate()}`;
+  const itemDate = `${toDate.getFullYear()}년 ${
+    toDate.getMonth() + 1
+  }월 ${toDate.getDate()}일`;
   const navigate = useNavigate();
 
   return (
@@ -12,23 +14,24 @@ const ListItem = (props) => {
         navigate(`/board/${props.item.id}`);
       }}
     >
-      <img
-        className={`ListItem_Photo_${
-          props.item.postPhoto === undefined ? "hidden" : "visible"
-        }`}
-        src={props.item.postPhoto}
-        alt="임시테스트"
-      />
+      {props.item.postPhoto ? (
+        <div className="ListItem_photo">
+          <img src={props.item.postPhoto} alt="게시글 이미지" />
+        </div>
+      ) : null}
 
-      <div className="ListItem_box">
-        <div className="ListItem_contents">
-          <h3>{props.item.title}</h3>
+      <div className="ListItem_content">
+        <h4>{props.item.title}</h4>
+        <div className="ListItem_maintext">
           <p>{props.item.content}</p>
         </div>
-        <div className="ListItem_info">
-          <span>{itemDate}</span>
+      </div>
+      <div className="ListItem_bottom">
+        <div className="ListItem_userInfo">
+          <img src={props.item.userPhoto} alt="유저 이미지" />
           <span>{props.item.userName}</span>
         </div>
+        <p>{itemDate}</p>
       </div>
     </div>
   );

@@ -1,11 +1,15 @@
 import { useEffect, useRef, useState } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import Header from "../components/Header";
 import { auth, db } from "../index";
+import { setLoginUserData } from "../store";
 import PreviewPhoto from "../util/PreviewPhoto";
 import StorageUpload from "../util/StorageUpload";
 
 const Join = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   // input칸에 제대로 작성하지 않았을 때 에러를 띄움과 동시에 그 에러input에 포커스주기
   // 위해 만들어둔 useRef
   const nicknameRef = useRef();
@@ -20,6 +24,8 @@ const Join = () => {
     joinErrorPassword: false,
     joinErrorNickname: false,
   });
+
+  // 이미지 설정 후 회원가입 할 때
 
   useEffect(() => {
     db.collection("default").onSnapshot((res) => {
@@ -61,11 +67,11 @@ const Join = () => {
     // form안에 만들어져있기에 preventDefault를 사용해서 기본적으로 새로고침되는걸
     // 막아줘야함
     e.preventDefault();
-    const url = await StorageUpload(
-      "userPhoto",
-      joinState.joinPhoto.name,
-      joinState.joinPhoto
-    );
+    // const url = await StorageUpload(
+    //   "userPhoto",
+    //   joinState.joinPhoto.name,
+    //   joinState.joinPhoto
+    // );
 
     const userDataDb = {
       userEmail: joinState.joinEmail,
@@ -87,23 +93,48 @@ const Join = () => {
         )
         .then((res) => {
           if (joinState.joinPhoto) {
-            res.user.updateProfile({
-              displayName: joinState.joinNickname,
-              photoURL: url,
+            StorageUpload(
+              "userPhoto/",
+              joinState.joinPhoto.name,
+              joinState.joinPhoto
+            ).then((url) => {
+              res.user.updateProfile({
+                displayName: joinState.joinNickname,
+                photoURL: url,
+              });
+              const userPhotoDb = { ...userDataDb, userPhoto: url };
+              db.collection("user")
+                .doc(res.user.uid)
+                .set(userPhotoDb)
+                .then(() => {
+                  dispatch(
+                    setLoginUserData({
+                      userName: joinState.joinNickname,
+                      userUid: res.user.uid,
+                      userPhoto: url,
+                    })
+                  );
+                });
             });
-            const userPhotoDb = { ...userDataDb, userPhoto: url };
-            db.collection("user").doc(res.user.uid).set(userPhotoDb);
-            navigate("/board", { replace: true });
           } else {
             res.user.updateProfile({
               displayName: joinState.joinNickname,
               photoURL: defaultPhoto,
             });
-
-            db.collection("user").doc(res.user.uid).set(userDataDb);
-            // 유저정보와 데이터베이스에 유저정보를 저장한 뒤 navigate로 이동시키기
-            navigate("/board", { replace: true });
+            db.collection("user")
+              .doc(res.user.uid)
+              .set(userDataDb)
+              .then(() => {
+                dispatch(
+                  setLoginUserData({
+                    userName: joinState.joinNickname,
+                    userUid: res.user.uid,
+                    userPhoto: defaultPhoto,
+                  })
+                );
+              });
           }
+          navigate("/board", { replace: true });
         })
         .catch((error) => {
           console.log(error);
@@ -126,8 +157,10 @@ const Join = () => {
 
   return (
     <div className="Join">
-      <h1 style={{ marginTop: "50px", marginBottom: "50px" }}>Just Talk</h1>
-      <h2 style={{ marginBottom: "30px" }}>Create a Just Talk account</h2>
+      <Header centerTitle="Join" />
+      <h3 style={{ marginBottom: "30px", marginTop: "30px" }}>
+        Create a Just Talk account
+      </h3>
 
       <form>
         <img
