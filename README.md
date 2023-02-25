@@ -13,7 +13,7 @@
   <img src="https://img.shields.io/badge/Redux-764ABC?style=flat&logo=Redux&logoColor=white" /> (React Toolkit)
   
   <p>작업 소요기간 1-16 ~ 1-26 까지 진행을 하였고. 그 후 개인 사정으로 작업을 잠시 멈췄었습니다.
-  타입스크립트를 사용하진 않았습니다.</p><br/>
+  타입스크립트를 사용하진 않았습니다. 또한 디자인을 미리 작업해두고 하는 프로젝트가 아닌점에서 CSS와 styled components가 섞여서 작업이되었습니다.</p><br/>
   
   <h4>1-26 마지막 작업까지의 기록</h4>
   <p>로그인 기능과 로그아웃기능, 회원가입, 글쓰기, 글 삭제, 글 수정, 댓글, 프로필변경, 다크모드 40% 진행,</p><br/>
