@@ -4,28 +4,45 @@ import {
   faXmark,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { auth } from "../index";
-import { setLoginUserData, toggleDark } from "../store";
+import { setLoginUserData } from "../store";
 
 const HeaderContainer = styled.div`
   display: flex;
   align-items: center;
   width: 100%;
   text-align: center;
+  @media screen and (min-width: 1024px) {
+    position: fixed;
+    width: 100%;
+    left: 0;
+    top: ${(props) => (props.scroll >= 100 ? "-100px" : "0")};
+    height: 70px;
+    z-index: 20;
+    background-color: var(--mainColor);
+    transition: all 0.5s;
+  }
 `;
 
 const SideHeaderBtnBox = styled.div`
   width: 25%;
   display: flex;
+  height: 100%;
   :first-child {
     justify-content: start;
+    @media screen and (min-width: 1024px) {
+      padding-left: 15px;
+    }
   }
   :last-child {
     justify-content: end;
+    @media screen and (min-width: 1024px) {
+      padding-right: 15px;
+    }
   }
   & button {
     border: none;
@@ -42,6 +59,7 @@ const CenterHeaderTextBox = styled.div`
 
 const Header = (props) => {
   const [menu, setMenu] = useState(false);
+  const [scroll, setScroll] = useState(0);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.loginUserData);
@@ -55,9 +73,23 @@ const Header = (props) => {
       })
     );
   };
+  const updateScroll = () => {
+    setScroll(window.scrollY || document.documentElement.scrollTop);
+  };
+  useEffect(() => {
+    window.addEventListener("scroll", updateScroll);
+  });
+
+  const myPageBtn = () => {
+    if (user.userUid.length > 1) {
+      navigate("/mypage");
+    } else {
+      alert("로그인을 해주세요.");
+    }
+  };
   return (
     <>
-      <HeaderContainer>
+      <HeaderContainer scroll={scroll}>
         <SideHeaderBtnBox style={{ visibility: props.leftVisible }}>
           <button onClick={props.leftBtn}>
             <FontAwesomeIcon icon={faArrowLeft} />
@@ -105,22 +137,9 @@ const Header = (props) => {
           >
             Home
           </li>
-          <li
-            onClick={() => {
-              navigate("/mypage");
-            }}
-          >
-            My Page
-          </li>
+          <li onClick={myPageBtn}>My Page</li>
         </ul>
         <ul>
-          <li
-            onClick={() => {
-              dispatch(toggleDark());
-            }}
-          >
-            Dark Mode
-          </li>
           {user.userUid ? (
             <li onClick={logoutBtn}>Log Out</li>
           ) : (
@@ -145,8 +164,9 @@ const SideMenu = styled.div`
   right: 0;
   width: 200px;
   height: 100%;
-  background-color: #fff;
-  z-index: 10;
+  background-color: var(--mainColor);
+  color: var(--fontColor);
+  z-index: 21;
   box-shadow: -1px 0px 4px 3px rgba(0, 0, 0, 0.2);
   transition: all 0.5s;
   transform: ${(props) =>

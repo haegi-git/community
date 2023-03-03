@@ -18,7 +18,6 @@ function App() {
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
       if (user) {
-        console.log(user);
         dispatch(
           setLoginUserData({
             userName: user.displayName,

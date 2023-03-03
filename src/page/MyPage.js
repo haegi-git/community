@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
@@ -24,6 +24,14 @@ const MyPage = () => {
     const getPreviewPhoto = await PreviewPhoto(e.target.files[0]);
     setPreview(getPreviewPhoto);
   };
+  useEffect(() => {
+    if (user.userUid.length <= 1) {
+      alert("로그인 상태가 아닙니다.");
+      navigate("/");
+    }
+  }, [user]);
+  // useEffect로 user가 업데이트 되면 확인해주기 ( 로그아웃하면 user정보가 바뀌면서
+  // 마이페이지에 있을 수 없게됨)
 
   const updateProfile = async (e) => {
     e.preventDefault();
@@ -131,7 +139,7 @@ const MyPageForm = styled.form`
     width: 80%;
     height: 50px;
     border: none;
-    background-color: antiquewhite;
+    background-color: var(--loginBtnColor);
     border-radius: 50px;
     margin-bottom: 30px;
     border: 1px solid black;
@@ -140,5 +148,8 @@ const MyPageForm = styled.form`
     display: ${(props) => props.blankError};
     margin-bottom: 15px;
     color: var(--errorColor);
+  }
+  @media screen and (min-width: 1024px) {
+    margin-top: 50px;
   }
 `;

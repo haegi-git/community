@@ -1,6 +1,6 @@
 import { faEllipsisV } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { db } from "../index";
 
@@ -12,6 +12,10 @@ const DetailComment = (props) => {
 
   const toDate = props.items.date.toDate();
   const commentDate = `${toDate.getMonth() + 1}월${toDate.getDate()}일`;
+
+  useEffect(() => {
+    setCommentOption(false);
+  }, [props.addComment]);
 
   const deleteComment = () => {
     db.collection("post")

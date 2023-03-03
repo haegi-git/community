@@ -12,7 +12,6 @@ const Login = () => {
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
       if (user !== null) {
-        console.log(user);
         navigate("/board", { replace: true });
       }
     });
@@ -31,6 +30,7 @@ const Login = () => {
       ...loginState,
       [e.target.name]: e.target.value,
     });
+    setLoginError("");
   };
 
   const loginBtn = (e) => {
@@ -45,7 +45,6 @@ const Login = () => {
         navigate("/board", { replace: true });
       })
       .catch((err) => {
-        console.log(err.code === "auth/wrong-password");
         if (err.code === "auth/invalid-email") {
           // 이메일 틀렸을 때
           setLoginError("You have entered the wrong email.");
@@ -61,7 +60,6 @@ const Login = () => {
           // 존재하지 않는 이메일일 때
           setLoginError("This email does not exist.");
         }
-        console.log(err);
       });
   };
   return (

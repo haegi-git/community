@@ -155,12 +155,14 @@ const Join = () => {
     }
   };
 
+  const leftBtn = () => {
+    navigate(-1);
+  };
+
   return (
     <div className="Join">
-      <Header centerTitle="Join" />
-      <h3 style={{ marginBottom: "30px", marginTop: "30px" }}>
-        Create a Just Talk account
-      </h3>
+      <Header leftBtn={leftBtn} centerTitle="Join" />
+      <h3>Create a Just Talk account</h3>
 
       <form>
         <img

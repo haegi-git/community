@@ -46,7 +46,7 @@ export default Slide;
 const SlideWrap = styled.div`
   width: 100%;
   height: 150px;
-  margin-top: 30px;
+  margin-top: 10px;
   margin-bottom: 30px;
   padding: 10px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.4);
@@ -59,5 +59,11 @@ const SlideWrap = styled.div`
   }
   & h4 {
     margin-bottom: 15px;
+  }
+  & .swiper-pagination-bullet {
+    background-color: black;
+  }
+  @media screen and (min-width: 1024px) {
+    margin-top: 40px;
   }
 `;

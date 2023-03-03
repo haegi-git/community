@@ -153,7 +153,14 @@ const Detail = () => {
 
         <div>
           {commentsData.map((items, i) => {
-            return <DetailComment detailId={id} items={items} key={i} />;
+            return (
+              <DetailComment
+                addComment={addComment}
+                detailId={id}
+                items={items}
+                key={i}
+              />
+            );
           })}
         </div>
       </div>
