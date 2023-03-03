@@ -3,6 +3,8 @@
   
   <p>저의 포트폴리오 목적으로 만들어 본 커뮤니티 사이트입니다. </p>
   
+  <h4>https://community-portfolio.web.app/</h4>
+  
   <h4>이 프로젝트에 적용된 기술들</h4>
   <img src="https://img.shields.io/badge/HTML5-E34F26?style=flat&logo=HTML5&logoColor=white" />
   <img src="https://img.shields.io/badge/CSS3-1572B6?style=flat&logo=CSS3&logoColor=white" />
@@ -22,4 +24,8 @@
   <h4>현재 시간 2-25 부터 다시 마무리작업을 시작</h4>
     <p>게시글의 댓글 개수를 표시해주어야하고 <br/>
     최적화 작업을 진행해주어야한다.</p>
+    
+    <h4>03 - 03<br/>
+    자잘한 버그들을 고쳐준 뒤 마무리 배포작업을 해주었습니다.<br/>
+    사소한 버그들이 있을 수 있으나 발견하게된다면 고쳐줄 예정입니다.</h4>
 </div>
